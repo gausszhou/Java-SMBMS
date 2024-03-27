@@ -1,7 +1,8 @@
 package com.example.smbms.pojo;
 
-public class BillWithProvider extends Bill {
+public class BillWithProviderName extends Bill {
     private String providerName; // 供应商名称
+
     public String getProviderName() {
         return providerName;
     }
