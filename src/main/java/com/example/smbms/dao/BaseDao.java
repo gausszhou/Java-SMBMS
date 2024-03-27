@@ -16,7 +16,6 @@ public class BaseDao {
         // 通过类加载器读取对应的资源
         InputStream is = BaseDao.class.getClassLoader().getResourceAsStream("db.properties");
 
-
         try {
             properties.load(is);
         } catch (IOException e) {
@@ -32,7 +31,7 @@ public class BaseDao {
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("driver");
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +63,7 @@ public class BaseDao {
         return preparedStatement.executeUpdate();
     }
 
-    public static boolean close(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
+    public static boolean close(Connection connection, ResultSet resultSet) {
         boolean flag = true;
         if (connection != null) {
             try {
@@ -74,14 +73,7 @@ public class BaseDao {
                 flag = false;
             }
         }
-        if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                flag = false;
-            }
-        }
+
         if (resultSet != null) {
             try {
                 resultSet.close();
